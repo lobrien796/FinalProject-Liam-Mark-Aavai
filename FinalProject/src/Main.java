@@ -5,6 +5,7 @@
 //  Date   : 11/20/25
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.JFrame;
 
 
 public class Main 
@@ -30,4 +31,10 @@ public class Main
 	    window.setVisible(true);  // make the window and the panel visible
 
 	  }
+	 
+
+	public void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
 }

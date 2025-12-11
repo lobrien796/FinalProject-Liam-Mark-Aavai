@@ -1,4 +1,5 @@
 import java.awt.*;
+import javax.swing.JPanel;
 
 public class JFrame extends Main
 {
@@ -9,7 +10,7 @@ public class JFrame extends Main
   public void paintComponent(Graphics g)
   {
 	  int width = getWidth();
-	  int height = getHeight();
+	  int height = Main.panel.getHeight();
 	  int yCenter = height/2;
 	  int xCenter = width/2;
 
