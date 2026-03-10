@@ -1,40 +1,44 @@
-//  This program is the main window for the program
-//  Authors: Aavai Tukhar, Liam O'Brien, Mark Nygaard
-//  Rev    : 1
-//  Notes  :
-//  Date   : 11/20/25
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.JFrame;
+import java.awt.*;
+import java.awt.event.*;
 
+public class Main {
+    private static Point initialClick;
 
-public class Main 
-{
+    public static void main(String[] args) {
+        JWindow window = new JWindow();
+        window.setSize(400, 300);
+        window.setLocationRelativeTo(null);
+        window.getContentPane().setBackground(Color.WHITE);
 
-	 public static Main panel;  // the window has a panel
-	
-	 public static void main(String[] args)
-	 {	
-		int width = 400;
-		int height = 300;
-	    JFrame window = new JFrame("Graphics Demo");
-	    // Set this window's location and size:
-	    // upper-left corner at 300, 300; width 200, height 150
-	    window.setBounds(100, 100, width, height);
-	    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-	    JFrame panel = new JFrame();  // creating the panel
-	    panel.setBackground(Color.BLUE);  // the default color is light gray
-	    Container c = window.getContentPane();
-	    c.add(panel); // adding the panel to the window
-	
-	    window.setVisible(true);  // make the window and the panel visible
+        window.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                initialClick = e.getPoint();
+            }
+        });
 
-	  }
-	 
+        window.addMouseMotionListener(new MouseAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                int thisX = window.getLocation().x;
+                int thisY = window.getLocation().y;
+                int xMoved = e.getX() - initialClick.x;
+                int yMoved = e.getY() - initialClick.y;
+                window.setLocation(thisX + xMoved, thisY + yMoved);
+            }
+        });
 
-	public void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		
-	}
+        JPanel welcomeButtons = new JPanel(new GridLayout(2,3));
+        JButton easyButton = new JButton("- EASY -");
+        JButton mediumButton = new JButton("- MEDIUM -");
+        JButton hardButton = new JButton("- HARD -");
+        welcomeButtons.add(easyButton);
+        welcomeButtons.add(mediumButton);
+        welcomeButtons.add(hardButton);
+
+        window.add(welcomeButtons);
+
+        
+        window.setVisible(true);
+        
+    }
 }
