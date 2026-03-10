@@ -27,14 +27,16 @@ public class Main {
             }
         });
 
-        JPanel welcomeButtons = new JPanel(new GridLayout(2,3));
+        JPanel welcomeButtons = new JPanel(new GridLayout(1,3));
         JButton easyButton = new JButton("- EASY -");
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
         welcomeButtons.add(easyButton);
         welcomeButtons.add(mediumButton);
         welcomeButtons.add(hardButton);
+        
 
+        window.add(new JButton("X"));
         window.add(welcomeButtons);
 
         
