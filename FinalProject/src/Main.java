@@ -22,6 +22,7 @@ public class Main {
         JButton hardButton = new JButton("- HARD -");
 
         easyButton.addActionListener(e -> cl.show(cards, "easyMaze"));
+        easyButton.addActionListener(e -> new MazeGenerator(10));
         mediumButton.addActionListener(e -> cl.show(cards, "mediumMaze"));
         hardButton.addActionListener(e -> cl.show(cards, "hardMaze"));
 
