@@ -1,18 +1,23 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
-public class Main {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Maze Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+public class Main extends JFrame {
+    private MazeGenerator maze = new MazeGenerator(10);
+    private CardLayout cl = new CardLayout();
+    private JPanel cards = new JPanel(cl);
 
-        CardLayout cl = new CardLayout();
-        JPanel cards = new JPanel(cl);
+    public Main() {
+        super("Maze Game");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 375);
+        setLocationRelativeTo(null);
 
-        cards.add(createMazeCard("Easy Maze", cl, cards), "easyMaze");
-        cards.add(createMazeCard("Medium Maze", cl, cards), "mediumMaze");
-        cards.add(createMazeCard("Hard Maze", cl, cards), "hardMaze");
+        cards.add(createMazeCard("Easy Maze"), "easyMaze");
+        cards.add(createMazeCard("Medium Maze"), "mediumMaze");
+        cards.add(createMazeCard("Hard Maze"), "hardMaze");
 
         JPanel welcomeScreen = new JPanel(new GridLayout(1, 3, 5, 5));
         welcomeScreen.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -22,7 +27,9 @@ public class Main {
         JButton hardButton = new JButton("- HARD -");
 
         easyButton.addActionListener(e -> cl.show(cards, "easyMaze"));
-        easyButton.addActionListener(e -> new MazeGenerator(5));
+        mediumButton.addActionListener(e -> cl.show(cards, "mediumMaze"));
+        hardButton.addActionListener(e -> cl.show(cards, "hardMaze"));
+
         welcomeScreen.add(easyButton);
         welcomeScreen.add(mediumButton);
         welcomeScreen.add(hardButton);
@@ -30,20 +37,42 @@ public class Main {
         cards.add(welcomeScreen, "menu");
         cl.show(cards, "menu");
 
-        frame.add(cards);
-        frame.setSize(new Dimension(600, 375));
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        add(cards);
+
+        setupKeyBindings();
     }
 
-    private static JPanel createMazeCard(String text, CardLayout cl, JPanel container) {
+    private void setupKeyBindings() {
+        InputMap im = cards.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = cards.getActionMap();
+
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "walkAction");
+        am.put("walkAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("up arrow was pressed!");
+                if (maze != null) {
+                    maze.walk();
+                }
+            }
+        });
+    }
+
+    private JPanel createMazeCard(String text) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(text, SwingConstants.CENTER), BorderLayout.CENTER);
 
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> cl.show(container, "menu"));
+        backButton.addActionListener(e -> cl.show(cards, "menu"));
         
         panel.add(backButton, BorderLayout.SOUTH);
         return panel;
+    }
+
+    public static void main(String[] args) {
+        // Run on the Event Dispatch Thread for thread safety
+        SwingUtilities.invokeLater(() -> {
+            new Main().setVisible(true);
+        });
     }
 }
