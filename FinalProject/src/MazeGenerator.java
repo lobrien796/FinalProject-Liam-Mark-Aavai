@@ -13,16 +13,31 @@ public class MazeGenerator {
     int currentColumn = 1;
     int currentRow = 1;
     Random rand = new Random();
-    boolean deadEnd = false;
+    boolean mazeDone = false;
+    int adjacentDirection;
 
     public MazeGenerator(int size) {
         mazeSize = size * 2 + 1;
         maze = new char[mazeSize][mazeSize];
-        clear(maze);
+        clear();
         maze[1][0] = startChar;
         maze[mazeSize - 2][mazeSize - 1] = endChar;
         maze[currentRow][currentColumn] = pathChar;
-
+        
+        // printMaze();
+        // while (!mazeDone) {
+        // 	while(!atDeadEnd()) {
+        // 		walk();
+        //         //printMaze();
+        // 	}
+        //     System.out.println("at dead end");
+        // 	hunt();
+        //     System.out.println("Current: (" + currentColumn + ", " + currentRow + ")");
+        // }
+        // printMaze();
+        while(!atDeadEnd()){
+            walk();
+        }
         printMaze();
     }
 
@@ -30,64 +45,73 @@ public class MazeGenerator {
         size = size * 2 + 1;
     }
 
-    private void clear(char[][] array) {
+    private void clear() {
         for (int i = 0; i < mazeSize; i++) {
             for (int j = 0; j < mazeSize; j++) {
                 if (i % 2 == 0) {
-                    array[i][j] = horizontalWall;
+                    maze[i][j] = horizontalWall;
                 } else {
                     if (j % 2 == 0) {
-                        array[i][j] = verticalWall;
+                        maze[i][j] = verticalWall;
                     } else {
-                        array[i][j] = blankChar;
+                        maze[i][j] = blankChar;
                     }
                 }
             }
         }
     }
+    
+    public void hunt() {
+    	for (int i = 0; i < mazeSize; i+=2) {
+    		for (int j = 0; j < mazeSize; j+=2) {
+    			if(maze[i][j] == blankChar) {
+    				maze[i][j] = pathChar;
+    				currentColumn = i;
+    				currentRow = j;
+                    //walk();
+    				return;
+    			}
+    		}
+    	}
+    	mazeDone = true;
+    }
 
     public void walk() {
-        if (atDeadEnd()) {
-            deadEnd = true;
-            return;
-        }
 
         int direction = rand.nextInt(4); // 0=Right, 1=Left, 2=Down, 3=Up
 
-        // Move Right
         if (direction == 0
                 && (currentColumn + 2 < mazeSize)
                 && maze[currentRow][currentColumn + 2] == blankChar) {
-            maze[currentRow][currentColumn + 1] = pathChar;
-            currentColumn += 2;
-            maze[currentRow][currentColumn] = pathChar;
+        	
+		            maze[currentRow][currentColumn + 1] = pathChar;
+		            currentColumn += 2;
+		            maze[currentRow][currentColumn] = pathChar;
 
-        // Move Left
         } else if (direction == 1
                 && (currentColumn - 2 >= 1)
                 && maze[currentRow][currentColumn - 2] == blankChar) {
-            maze[currentRow][currentColumn - 1] = pathChar;
-            currentColumn -= 2;
-            maze[currentRow][currentColumn] = pathChar;
+        	
+		            maze[currentRow][currentColumn - 1] = pathChar;
+		            currentColumn -= 2;
+		            maze[currentRow][currentColumn] = pathChar;
 
-        // Move Down
         } else if (direction == 2
                 && (currentRow + 2 < mazeSize)
                 && maze[currentRow + 2][currentColumn] == blankChar) {
-            maze[currentRow + 1][currentColumn] = pathChar;
-            currentRow += 2;
-            maze[currentRow][currentColumn] = pathChar;
+        	
+		            maze[currentRow + 1][currentColumn] = pathChar;
+		            currentRow += 2;
+		            maze[currentRow][currentColumn] = pathChar;
 
-        // Move Up
         } else if (direction == 3
                 && (currentRow - 2 >= 1)
                 && maze[currentRow - 2][currentColumn] == blankChar) {
-            maze[currentRow - 1][currentColumn] = pathChar;
-            currentRow -= 2;
-            maze[currentRow][currentColumn] = pathChar;
+        	
+		            maze[currentRow - 1][currentColumn] = pathChar;
+		            currentRow -= 2;
+		            maze[currentRow][currentColumn] = pathChar;
         }
-
-        printMaze();
     }
 
     private boolean atDeadEnd() {
@@ -97,6 +121,7 @@ public class MazeGenerator {
         boolean canMoveUp    = (currentRow - 2 >= 1)           && maze[currentRow - 2][currentColumn] == blankChar;
         return !(canMoveRight || canMoveLeft || canMoveDown || canMoveUp);
     }
+
 
     public void printMaze() {
     System.out.print("\033[H\033[2J");

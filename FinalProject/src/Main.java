@@ -70,7 +70,6 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Run on the Event Dispatch Thread for thread safety
         SwingUtilities.invokeLater(() -> {
             new Main().setVisible(true);
         });
