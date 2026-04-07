@@ -58,35 +58,35 @@ public class MazeGenerator {
     }
     
     public void hunt() {
-    	for (int i = 0; i < mazeSize; i+=2) {
-    		for (int j = 0; j < mazeSize; j+=2) {
+    	for (int i = 1; i < mazeSize; i+=2) {
+    		for (int j = 1; j < mazeSize; j+=2) {
     			if(maze[i][j] == blankChar) {
                     if(j+2 < mazeSize && maze[i][j+2] == pathChar){ //right
                         maze[i][j+1] = pathChar;
                         maze[i][j] = pathChar;
-                        currentColumn = i;
-                        currentRow = j;
+                        currentColumn = j;
+                        currentRow = i;
                         return;
                         
                     }else if(j-2 > 0 && maze[i][j-2] == pathChar){ //left
                         maze[i][j-1] = pathChar;
                         maze[i][j] = pathChar;
-                        currentColumn = i;
-                        currentRow = j;
+                        currentColumn = j;
+                        currentRow = i;
                         return;
 
                     }else if(i+2 < mazeSize && maze[i+2][j] == pathChar){ //down
                         maze[i+1][j] = pathChar;
                         maze[i][j] = pathChar;
-                        currentColumn = i;
-                        currentRow = j;
+                        currentColumn = j;
+                        currentRow = i;
                         return;
                         
-                    }else if(i-2 < mazeSize && maze[i-2][j] == pathChar){ //up
+                    }else if(i-2 > 0 && maze[i-2][j] == pathChar){ //up
                         maze[i-1][j] = pathChar;
                         maze[i][j] = pathChar;
-                        currentColumn = i;
-                        currentRow = j;
+                        currentColumn = j;
+                        currentRow = i;
                         return;
                     }
     			}
