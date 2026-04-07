@@ -108,16 +108,9 @@ public class MazeGenerator {
     for (String section : arrayString.split("],")) {
         String row = section.strip().replaceAll(",", "") + "]";
         for (int i = 0; i < row.length(); i++) {
-            char c = row.charAt(i);
-            if (c == horizontalWall || c == verticalWall) {
-                System.out.print("\u001B[30m" + c + "\u001B[0m"); // dark/black for walls
-            } else if (c == pathChar) {
-                System.out.print("\u001B[32m" + c + "\u001B[0m"); // green for path
-            } else {
-                System.out.print(c); // print everything else as-is (S, E, spaces, etc.)
-            }
+            System.out.print(row.charAt(i));
         }
-        System.out.println(); // newline after each row
+        System.out.println();
     }
 }
 }
