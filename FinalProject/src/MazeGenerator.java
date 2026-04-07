@@ -24,19 +24,15 @@ public class MazeGenerator {
         maze[mazeSize - 2][mazeSize - 1] = endChar;
         maze[currentRow][currentColumn] = pathChar;
         
-        // printMaze();
-        // while (!mazeDone) {
-        // 	while(!atDeadEnd()) {
-        // 		walk();
-        //         //printMaze();
-        // 	}
-        //     System.out.println("at dead end");
-        // 	hunt();
-        //     System.out.println("Current: (" + currentColumn + ", " + currentRow + ")");
-        // }
-        // printMaze();
-        while(!atDeadEnd()){
-            walk();
+        while (!mazeDone) {
+        	while(!atDeadEnd()) {
+        		walk();
+                //printMaze();
+        	}
+            printMaze();
+            System.out.println("at dead end");
+        	hunt();
+            System.out.println("Current: (" + currentColumn + ", " + currentRow + ")");
         }
         printMaze();
     }
@@ -65,11 +61,34 @@ public class MazeGenerator {
     	for (int i = 0; i < mazeSize; i+=2) {
     		for (int j = 0; j < mazeSize; j+=2) {
     			if(maze[i][j] == blankChar) {
-    				maze[i][j] = pathChar;
-    				currentColumn = i;
-    				currentRow = j;
-                    //walk();
-    				return;
+                    if(j+2 < mazeSize && maze[i][j+2] == pathChar){ //right
+                        maze[i][j+1] = pathChar;
+                        maze[i][j] = pathChar;
+                        currentColumn = i;
+                        currentRow = j;
+                        return;
+                        
+                    }else if(j-2 > 0 && maze[i][j-2] == pathChar){ //left
+                        maze[i][j-1] = pathChar;
+                        maze[i][j] = pathChar;
+                        currentColumn = i;
+                        currentRow = j;
+                        return;
+
+                    }else if(i+2 < mazeSize && maze[i+2][j] == pathChar){ //down
+                        maze[i+1][j] = pathChar;
+                        maze[i][j] = pathChar;
+                        currentColumn = i;
+                        currentRow = j;
+                        return;
+                        
+                    }else if(i-2 < mazeSize && maze[i-2][j] == pathChar){ //up
+                        maze[i-1][j] = pathChar;
+                        maze[i][j] = pathChar;
+                        currentColumn = i;
+                        currentRow = j;
+                        return;
+                    }
     			}
     		}
     	}
