@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class Main extends JFrame {
-    private MazeGenerator maze = new MazeGenerator(10);
+    private MazeGenerator maze = new MazeGenerator(20);
     private CardLayout cl = new CardLayout();
     private JPanel cards = new JPanel(cl);
 

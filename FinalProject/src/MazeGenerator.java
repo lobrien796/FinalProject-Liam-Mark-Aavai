@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class MazeGenerator {
@@ -15,6 +14,7 @@ public class MazeGenerator {
     Random rand = new Random();
     boolean mazeDone = false;
     int adjacentDirection;
+    int huntStartRow = 1;
 
     public MazeGenerator(int size) {
         mazeSize = size * 2 + 1;
@@ -23,17 +23,19 @@ public class MazeGenerator {
         maze[1][0] = startChar;
         maze[mazeSize - 2][mazeSize - 1] = endChar;
         maze[currentRow][currentColumn] = pathChar;
+
         
+        long startTime = System.nanoTime();
         while (!mazeDone) {
         	while(!atDeadEnd()) {
         		walk();
-                //printMaze();
         	}
-            printMaze();
-            System.out.println("at dead end");
         	hunt();
-            System.out.println("Current: (" + currentColumn + ", " + currentRow + ")");
         }
+
+        long endTime = System.nanoTime();
+		long elapsedTime = (long) ((long) (endTime - startTime)/1_000_000.0); // in milliseconds
+        System.out.println((mazeSize-1)/2 + "x" + (mazeSize-1)/2 + " maze generated in " + elapsedTime + "ms");
         printMaze();
     }
 
@@ -58,9 +60,11 @@ public class MazeGenerator {
     }
     
     public void hunt() {
-    	for (int i = 1; i < mazeSize; i+=2) {
+    	for (int i = huntStartRow; i < mazeSize; i+=2) {
+            boolean rowFullyCarved = true;
     		for (int j = 1; j < mazeSize; j+=2) {
     			if(maze[i][j] == blankChar) {
+                    rowFullyCarved = false;
                     if(j+2 < mazeSize && maze[i][j+2] == pathChar){ //right
                         maze[i][j+1] = pathChar;
                         maze[i][j] = pathChar;
@@ -91,6 +95,7 @@ public class MazeGenerator {
                     }
     			}
     		}
+            if (rowFullyCarved) huntStartRow += 2;
     	}
     	mazeDone = true;
     }
@@ -143,18 +148,13 @@ public class MazeGenerator {
 
 
     public void printMaze() {
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-
-    String arrayString = Arrays.deepToString(maze);
-    arrayString = arrayString.substring(1, arrayString.length() - 2);
-
-    for (String section : arrayString.split("],")) {
-        String row = section.strip().replaceAll(",", "") + "]";
-        for (int i = 0; i < row.length(); i++) {
-            System.out.print(row.charAt(i));
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < mazeSize; i++) {
+        for (int j = 0; j < mazeSize; j++) {
+            sb.append(maze[i][j] + " ");
         }
-        System.out.println();
+        sb.append('\n');
     }
-}
+    System.out.print(sb);
+    }
 }
