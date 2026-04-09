@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class Main extends JFrame {
-    private MazeGenerator maze = new MazeGenerator(10);
+    private MazeGenerator maze = new MazeGenerator(5);
     private CardLayout cl = new CardLayout();
     private JPanel cards = new JPanel(cl);
 
@@ -26,9 +26,23 @@ public class Main extends JFrame {
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
 
-        easyButton.addActionListener(e -> cl.show(cards, "easyMaze"));
-        mediumButton.addActionListener(e -> cl.show(cards, "mediumMaze"));
-        hardButton.addActionListener(e -> cl.show(cards, "hardMaze"));
+        easyButton.addActionListener(e -> {
+            maze.setSize(5);
+            maze.generate();
+            cl.show(cards, "easyMaze");
+        });
+
+        mediumButton.addActionListener(e -> {
+            maze.setSize(10);
+            maze.generate();
+            cl.show(cards, "mediumMaze");
+        });
+
+        hardButton.addActionListener(e -> {
+            maze.setSize(30);
+            maze.generate();
+            cl.show(cards, "hardMaze");
+        });
 
         welcomeScreen.add(easyButton);
         welcomeScreen.add(mediumButton);
@@ -70,7 +84,6 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Run on the Event Dispatch Thread for thread safety
         SwingUtilities.invokeLater(() -> {
             new Main().setVisible(true);
         });
