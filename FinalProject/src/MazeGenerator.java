@@ -16,21 +16,20 @@ public class MazeGenerator {
     private int huntStartRow = 1;
 
     public MazeGenerator(int size) {
-        mazeSize = size * 2 + 1;
-        maze = new char[mazeSize][mazeSize];
+        setSize(size);
     }
 
     public void setSize(int size) {
-    mazeSize = size * 2 + 1;
-    maze = new char[mazeSize][mazeSize];
-    huntStartRow = 1;
-    mazeDone = false;
-    currentColumn = 1;
-    currentRow = 1;
-    clear();
-    maze[1][0] = startChar;
-    maze[mazeSize - 2][mazeSize - 1] = endChar;
-    maze[currentRow][currentColumn] = pathChar;
+        mazeSize = size * 2 + 1;
+        maze = new char[mazeSize][mazeSize];
+        huntStartRow = 1;
+        mazeDone = false;
+        currentColumn = 1;
+        currentRow = 1;
+        clear();
+        maze[1][0] = startChar;
+        maze[mazeSize - 2][mazeSize - 1] = endChar;
+        maze[currentRow][currentColumn] = pathChar;
     }
 
     public void generate(){
@@ -44,8 +43,8 @@ public class MazeGenerator {
 
         long endTime = System.nanoTime();
 		long elapsedTime = (long) ((long) (endTime - startTime)/1_000_000.0); // in milliseconds
-        System.out.println((mazeSize-1)/2 + "x" + (mazeSize-1)/2 + " maze generated in " + elapsedTime + "ms");
         System.out.println(this.toString());
+        System.out.println((mazeSize-1)/2 + "x" + (mazeSize-1)/2 + " maze generated in " + elapsedTime + "ms");
     }
 
     private void clear() {
@@ -111,17 +110,24 @@ public class MazeGenerator {
 
     public void walk() {
 
-        int direction = rand.nextInt(4); // 0=Right, 1=Left, 2=Down, 3=Up
+        int direction = rand.nextInt(4);
 
-        if (direction == 0
+        if (direction == 0 //right
                 && (currentColumn + 2 < mazeSize)
                 && maze[currentRow][currentColumn + 2] == blankChar) {
         	
 		            maze[currentRow][currentColumn + 1] = pathChar;
 		            currentColumn += 2;
 		            maze[currentRow][currentColumn] = pathChar;
+                    try{
+                        maze[currentRow-1][currentRow]=horizontalWall; //straight walls for better look
+                        maze[currentRow+1][currentRow]=horizontalWall;
+                    }catch (Exception e){
+                        
+                    }
+                    
 
-        } else if (direction == 1
+        } else if (direction == 1 //Left
                 && (currentColumn - 2 >= 1)
                 && maze[currentRow][currentColumn - 2] == blankChar) {
         	
@@ -129,7 +135,7 @@ public class MazeGenerator {
 		            currentColumn -= 2;
 		            maze[currentRow][currentColumn] = pathChar;
 
-        } else if (direction == 2
+        } else if (direction == 2 //Down
                 && (currentRow + 2 < mazeSize)
                 && maze[currentRow + 2][currentColumn] == blankChar) {
         	
@@ -137,7 +143,7 @@ public class MazeGenerator {
 		            currentRow += 2;
 		            maze[currentRow][currentColumn] = pathChar;
 
-        } else if (direction == 3
+        } else if (direction == 3 //UP
                 && (currentRow - 2 >= 1)
                 && maze[currentRow - 2][currentColumn] == blankChar) {
         	
@@ -160,7 +166,7 @@ public class MazeGenerator {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mazeSize; i++) {
             for (int j = 0; j < mazeSize; j++) {
-                sb.append(maze[i][j]);
+                sb.append(maze[i][j]+ " ");
             }
             sb.append('\n');
         }
