@@ -64,7 +64,7 @@ public class Main extends JFrame {
         am.put("walkAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("up arrow was pressed!");
+                System.out.println("up arrow was pressed");
                 if (maze != null) {
                     maze.walk();
                 }
