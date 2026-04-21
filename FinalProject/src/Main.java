@@ -26,18 +26,7 @@ public class Main extends JFrame {
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
         
-        int size = maze.getSize();
-        char[][] a = maze.getMaze();
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i > size; i++) {
-        	for (int i2 = 0; i2 > size; i2++) {
-        		char cha = a[x][y]; 
-        		System.out.println(cha);
-        		x++;
-        	}
-        	y++;
-        }
+     
         
         
         easyButton.addActionListener(e -> {
@@ -45,6 +34,19 @@ public class Main extends JFrame {
             maze.generate();
             cl.show(cards, "easyMaze");
             
+            int size = maze.getSize();
+            char[][] array = maze.getMaze();
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < size; i++) {
+            	for (int i2 = 0; i2 < size; i2++) {
+            		char cha = array[x][y]; 
+            		System.out.print(cha);
+            		x++;
+            	}
+            	y++;
+            	x=0;
+            }
         });
 
         mediumButton.addActionListener(e -> {
