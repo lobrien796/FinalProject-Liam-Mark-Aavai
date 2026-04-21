@@ -44,6 +44,7 @@ public class Main extends JFrame {
             		System.out.print(cha);
             		x++;
             	}
+                System.out.println();
             	y++;
             	x=0;
             }
