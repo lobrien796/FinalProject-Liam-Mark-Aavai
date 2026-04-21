@@ -178,4 +178,8 @@ public class MazeGenerator {
     	 
     	 return maze;
      }
+     
+     public int getSize() {
+		return mazeSize;
+     }
 }

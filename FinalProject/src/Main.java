@@ -25,11 +25,26 @@ public class Main extends JFrame {
         JButton easyButton = new JButton("- EASY -");
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
-
+        
+        int size = maze.getSize();
+        char[][] a = maze.getMaze();
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i > size; i++) {
+        	for (int i2 = 0; i2 > size; i2++) {
+        		char cha = a[x][y]; 
+        		System.out.println(cha);
+        		x++;
+        	}
+        	y++;
+        }
+        
+        
         easyButton.addActionListener(e -> {
             maze.setSize(5);
             maze.generate();
             cl.show(cards, "easyMaze");
+            
         });
 
         mediumButton.addActionListener(e -> {
@@ -54,6 +69,7 @@ public class Main extends JFrame {
         add(cards);
 
         setupKeyBindings();
+        
     }
 
     private void setupKeyBindings() {
