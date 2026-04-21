@@ -4,7 +4,7 @@ public class MazeGenerator {
     private char[][] maze;
     private final char blankChar = ' ';
     private final char verticalWall = '|';
-    private final char horizontalWall = '-';
+    private final char horizontalWall = '—';
     private final char pathChar = '+';
     private final char startChar = 'S';
     private final char endChar = 'E';
