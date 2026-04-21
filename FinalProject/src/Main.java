@@ -14,7 +14,7 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 375);
         setLocationRelativeTo(null);
-
+        
         cards.add(createMazeCard("Easy Maze"), "easyMaze");
         cards.add(createMazeCard("Medium Maze"), "mediumMaze");
         cards.add(createMazeCard("Hard Maze"), "hardMaze");
