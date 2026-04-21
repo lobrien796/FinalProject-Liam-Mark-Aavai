@@ -172,4 +172,10 @@ public class MazeGenerator {
         }
         return sb.toString();
     }
+     public char[][] getMaze() {
+		
+    	 
+    	 
+    	 return maze;
+     }
 }
