@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+
 public class Main extends JFrame {
     private MazeGenerator maze = new MazeGenerator(5);
     private CardLayout cl = new CardLayout();
@@ -27,9 +28,6 @@ public class Main extends JFrame {
         JButton easyButton = new JButton("- EASY -");
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
-        
-        
-        
         
         easyButton.addActionListener(e -> {
             maze.setSize(5);
@@ -100,7 +98,9 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new Main().setVisible(true);
+            JFrame window = new Main();
+            window.setVisible(true);
+            window.setIconImage(icon);
         });
     }
     

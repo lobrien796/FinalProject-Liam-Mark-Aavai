@@ -37,8 +37,10 @@ public class MazeGenerator {
         while (!mazeDone) {
         	while(!atDeadEnd()) {
         		walk();
+                //System.out.println("walk\n"+this.toString());
         	}
         	hunt();
+            //System.out.println("hunt\n"+this.toString());
         }
 
         long endTime = System.nanoTime();
@@ -119,12 +121,12 @@ public class MazeGenerator {
 		            maze[currentRow][currentColumn + 1] = pathChar;
 		            currentColumn += 2;
 		            maze[currentRow][currentColumn] = pathChar;
-                    try{
-                        maze[currentRow-1][currentRow]=horizontalWall; //straight walls for better look
-                        maze[currentRow+1][currentRow]=horizontalWall;
-                    }catch (Exception e){
+                    // try{
+                    //     maze[currentRow-1][currentRow]=horizontalWall; //straight walls for better look
+                    //     maze[currentRow+1][currentRow]=horizontalWall;
+                    // }catch (Exception e){
                         
-                    }
+                    // }
                     
 
         } else if (direction == 1 //Left
