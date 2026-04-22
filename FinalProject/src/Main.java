@@ -8,7 +8,7 @@ public class Main extends JFrame {
     private MazeGenerator maze = new MazeGenerator(5);
     private CardLayout cl = new CardLayout();
     private JPanel cards = new JPanel(cl);
-
+    boolean draw = false;
     public Main() {
         super("Maze Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,40 +26,34 @@ public class Main extends JFrame {
         JButton mediumButton = new JButton("- MEDIUM -");
         JButton hardButton = new JButton("- HARD -");
         
-     
+        
         
         
         easyButton.addActionListener(e -> {
             maze.setSize(5);
             maze.generate();
             cl.show(cards, "easyMaze");
+            draw = true;
+            repaint();
             
-            int size = maze.getSize();
-            char[][] array = maze.getMaze();
-            int x = 0;
-            int y = 0;
-            for (int i = 0; i < size; i++) {
-            	for (int i2 = 0; i2 < size; i2++) {
-            		char cha = array[x][y]; 
-            		System.out.print(cha);
-            		x++;
-            	}
-                System.out.println();
-            	y++;
-            	x=0;
-            }
         });
 
         mediumButton.addActionListener(e -> {
             maze.setSize(10);
             maze.generate();
             cl.show(cards, "mediumMaze");
+            draw = true;
+            repaint();
+            
         });
 
         hardButton.addActionListener(e -> {
             maze.setSize(30);
             maze.generate();
             cl.show(cards, "hardMaze");
+            draw = true;
+            repaint();
+            
         });
 
         welcomeScreen.add(easyButton);
@@ -106,6 +100,45 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new Main().setVisible(true);
         });
+    }
+    
+    public void paint(Graphics g) {
+    	super.paint(g);
+    	  int size = maze.getSize();
+          char[][] array = maze.getMaze();
+          int blockSize = 25;
+          int x = 100;
+          int y = 100;
+          if (draw) {
+	          for (int i = 0; i < size; i++) {
+	          	for (int i2 = 0; i2 < size; i2++) {
+	          		char cha = array[i][i2]; 
+	          		System.out.print(cha);
+	          		if (cha == '—') {
+	          			g.setColor(Color.black);
+	          			g.fillRect(x, y, blockSize, blockSize);
+	          		} else if (cha == '|' ) {
+	          			g.setColor(Color.black);
+	      				g.fillRect(x, y, blockSize, blockSize);
+	          		} else if (cha == '+') {
+	          			g.setColor(Color.WHITE);
+	          			g.fillRect(x, y, blockSize, blockSize);
+	          		} else if (cha == 'S') {
+	          			g.setColor(Color.GREEN);
+	          			g.fillRect(x, y, blockSize, blockSize);
+	          		} else if (cha == 'E') {
+	          			g.setColor(Color.RED);
+	          			g.fillRect(x, y, blockSize, blockSize);
+	          		}
+	          		x = x + blockSize;
+	          	}
+	              System.out.println();
+	              y = y + blockSize;
+	              x = 100;
+	          	
+	          }
+	          
+          }   
     }
     
 }
