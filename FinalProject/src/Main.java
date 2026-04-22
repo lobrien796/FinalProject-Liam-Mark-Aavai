@@ -9,6 +9,8 @@ public class Main extends JFrame {
     private CardLayout cl = new CardLayout();
     private JPanel cards = new JPanel(cl);
     boolean draw = false;
+    
+    
     public Main() {
         super("Maze Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,14 +108,20 @@ public class Main extends JFrame {
     	super.paint(g);
     	  int size = maze.getSize();
           char[][] array = maze.getMaze();
-          int blockSize = 25;
-          int x = 100;
-          int y = 100;
+          
+          int windowWidth = cards.getWidth();
+          int windowHeight= cards.getHeight();
+          int blockSize = (int)(windowWidth/2);
+         
+          blockSize =  Math.max(1,(blockSize/size));
+          int mazeSize = blockSize * size;
+          int x = (windowWidth/2) - (mazeSize/2);
+          int y =40;
           if (draw) {
 	          for (int i = 0; i < size; i++) {
 	          	for (int i2 = 0; i2 < size; i2++) {
 	          		char cha = array[i][i2]; 
-	          		System.out.print(cha);
+	          		
 	          		if (cha == '—') {
 	          			g.setColor(Color.black);
 	          			g.fillRect(x, y, blockSize, blockSize);
@@ -132,9 +140,9 @@ public class Main extends JFrame {
 	          		}
 	          		x = x + blockSize;
 	          	}
-	              System.out.println();
+	              
 	              y = y + blockSize;
-	              x = 100;
+	              x = windowWidth/2 - mazeSize/2;
 	          	
 	          }
 	          
