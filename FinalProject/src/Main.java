@@ -100,7 +100,6 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(() -> {
             JFrame window = new Main();
             window.setVisible(true);
-            window.setIconImage(icon);
         });
     }
     
