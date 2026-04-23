@@ -105,16 +105,20 @@ public class Main extends JFrame {
     
     public void paint(Graphics g) {
     	super.paint(g);
-    	  int size = maze.getSize();
+    	  double size = maze.getSize();
           char[][] array = maze.getMaze();
           
-          int windowWidth = cards.getWidth();
-          int windowHeight= cards.getHeight();
-          int blockSize = (int)(windowWidth/2);
+          double windowWidth = cards.getWidth();
+          double windowHeight= cards.getHeight()-40;
+          double blockSize = (int)(windowWidth/2.0);
          
-          blockSize =  Math.max(1,(blockSize/size));
-          int mazeSize = blockSize * size;
-          int x = (windowWidth/2) - (mazeSize/2);
+          blockSize =  Math.min((windowHeight/size) ,(windowWidth/size));
+          double mazeSize = blockSize * size;
+          
+          while (mazeSize<Math.min(windowHeight, windowWidth-40)) {
+        	  blockSize++;
+          }
+          int x = (int) (((windowWidth)/2.0) - ((mazeSize)/2.0));
           int y =40;
           if (draw) {
 	          for (int i = 0; i < size; i++) {
@@ -123,25 +127,25 @@ public class Main extends JFrame {
 	          		
 	          		if (cha == '—') {
 	          			g.setColor(Color.black);
-	          			g.fillRect(x, y, blockSize, blockSize);
+	          			g.fillRect(x, y, (int)blockSize, (int) blockSize);
 	          		} else if (cha == '|' ) {
 	          			g.setColor(Color.black);
-	      				g.fillRect(x, y, blockSize, blockSize);
+	      				g.fillRect(x, y, (int)blockSize, (int) blockSize);
 	          		} else if (cha == '+') {
 	          			g.setColor(Color.WHITE);
-	          			g.fillRect(x, y, blockSize, blockSize);
+	          			g.fillRect(x, y, (int)blockSize, (int) blockSize);
 	          		} else if (cha == 'S') {
 	          			g.setColor(Color.GREEN);
-	          			g.fillRect(x, y, blockSize, blockSize);
+	          			g.fillRect(x, y,(int) blockSize, (int) blockSize);
 	          		} else if (cha == 'E') {
 	          			g.setColor(Color.RED);
-	          			g.fillRect(x, y, blockSize, blockSize);
+	          			g.fillRect(x, y,(int) blockSize, (int) blockSize);
 	          		}
-	          		x = x + blockSize;
+	          		x = (int) (x + blockSize);
 	          	}
 	              
-	              y = y + blockSize;
-	              x = windowWidth/2 - mazeSize/2;
+	              y = (int) (y + blockSize);
+	              x = (int) (windowWidth/2 - mazeSize/2);
 	          	
 	          }
 	          
