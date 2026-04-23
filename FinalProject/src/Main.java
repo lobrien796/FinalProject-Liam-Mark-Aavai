@@ -117,6 +117,7 @@ public class Main extends JFrame {
           
           while (mazeSize<Math.min(windowHeight, windowWidth-40)) {
         	  blockSize++;
+        	  mazeSize = blockSize * size;
           }
           int x = (int) (((windowWidth)/2.0) - ((mazeSize)/2.0));
           int y =40;
